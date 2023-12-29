@@ -1,0 +1,11 @@
+const express = require("express");
+const router = express.Router();
+const asyncHandler = require("express-async-handler");
+const { authMiddleware, isAdmin } = require("../app/middlewares/authMiddleware");
+const brandController = require("../app/Controllers/brandCtrl");
+router.post("/", authMiddleware, isAdmin, asyncHandler(brandController.createBrand));
+router.get("/", asyncHandler(brandController.getAllBrand));
+router.get("/:id", authMiddleware, isAdmin, asyncHandler(brandController.getABrand));
+router.put("/:id", authMiddleware, isAdmin, asyncHandler(brandController.updateBrand));
+router.delete("/:id", authMiddleware, isAdmin, asyncHandler(brandController.deleteBrand));
+module.exports = router;
